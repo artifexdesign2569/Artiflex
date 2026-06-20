@@ -1,0 +1,357 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+const HERO_IMAGE = "https://api.builder.io/api/v1/image/assets/TEMP/ffe0aca54c70c43ac286e69d371c417c1b757a85?width=2880";
+const LOGO_WHITE = "https://api.builder.io/api/v1/image/assets/TEMP/781484886a73f5f8ddb798a82f7d89581cdffec0?width=382";
+const LOGO_DARK = "https://api.builder.io/api/v1/image/assets/TEMP/bda7bb5fe1773134e0628be4ee212746ed30ef1f?width=554";
+const BREAKER_IMAGE = "https://api.builder.io/api/v1/image/assets/TEMP/78f0adc919287461b675ab4a7b53b7870e9bf92d?width=2880";
+const CLIENTS_BG = "https://api.builder.io/api/v1/image/assets/TEMP/96124079bf01e9ec0893ba1623d4736dd6e3000a?width=5760";
+const DOWN_ARROW = "https://api.builder.io/api/v1/image/assets/TEMP/1a782b42c98689797e7a7c36bccd83632da7fa50?width=18";
+
+const testimonials = [
+  {
+    quote:
+      "Artifex transformed our technical data into a world-class presentation that helped us secure a major international contract. Their team understands the precision of the manufacturing world and delivered our project with absolute professionalism. They are a vital creative engine for our business.",
+    author: "— Somchai P., Managing Director",
+  },
+  {
+    quote:
+      "Working with Artifex elevated our brand identity beyond what we thought possible. Their deep understanding of the industrial sector means zero time wasted explaining context — they just get it.",
+    author: "— Nattapong K., Operations Director",
+  },
+  {
+    quote:
+      "The 3D product renderings Artifex delivered for our catalogue were indistinguishable from photographs. Our sales team now has tools that truly reflect the quality of our products.",
+    author: "— Wiruch T., Sales Manager",
+  },
+  {
+    quote:
+      "From our factory floor video to our B2B website, Artifex delivered everything on schedule and above spec. Reliable, precise, and genuinely creative.",
+    author: "— Kanchana S., CEO",
+  },
+];
+
+const services = [
+  "Industrial Branding",
+  "Corporate Identity",
+  "Technical Catalogues",
+  "3D Product Rendering",
+  "B2B Web Development",
+  "Factory Videography",
+  "High-Impact Presentations",
+];
+
+export default function Index() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const prevSlide = () =>
+    setActiveSlide((p) => (p === 0 ? testimonials.length - 1 : p - 1));
+  const nextSlide = () =>
+    setActiveSlide((p) => (p === testimonials.length - 1 ? 0 : p + 1));
+
+  return (
+    <div className="min-h-screen bg-white font-ibm overflow-x-hidden">
+      {/* ── HERO SECTION ── */}
+      <section className="relative w-full min-h-screen flex flex-col">
+        {/* Background image */}
+        <img
+          src={HERO_IMAGE}
+          alt="Industrial hero"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/30" />
+
+        {/* ── NAVBAR ── */}
+        <nav className="relative z-20 flex items-center justify-between px-6 md:px-10 lg:px-[70px] py-[22px]">
+          {/* Logo */}
+          <img src={LOGO_WHITE} alt="Artifex" className="h-[47px] w-auto" />
+
+          {/* Desktop nav pill */}
+          <div className="hidden lg:flex items-center gap-0 rounded-[20px] border-2 border-white/30 bg-white/10 backdrop-blur-[21px] px-6 py-4">
+            <div className="flex items-center gap-8 text-[#EAEAEA] font-ibm text-[15px]">
+              <Link to="/" className="hover:opacity-80 transition-opacity">
+                Home
+              </Link>
+              <button className="flex items-center gap-1 hover:opacity-80 transition-opacity">
+                About us
+                <img src={DOWN_ARROW} alt="" className="w-[9px] h-[5px]" />
+              </button>
+              <button className="flex items-center gap-1 hover:opacity-80 transition-opacity">
+                Services
+                <img src={DOWN_ARROW} alt="" className="w-[9px] h-[5px]" />
+              </button>
+              <Link to="/contact" className="hover:opacity-80 transition-opacity">
+                Contact
+              </Link>
+            </div>
+          </div>
+
+          {/* Start Project button */}
+          <div className="hidden lg:block">
+            <button className="bg-[#EAEAEA] text-black font-unispace font-bold text-[12px] leading-[15px] px-[19px] py-[13px] rounded-[10px] hover:bg-white transition-colors">
+              Start Project
+            </button>
+          </div>
+
+          {/* Mobile menu button */}
+          <button
+            className="lg:hidden relative z-20 text-white"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+
+          {/* Mobile menu overlay */}
+          {mobileMenuOpen && (
+            <div className="lg:hidden absolute top-0 left-0 w-full bg-[#0F1A31]/95 backdrop-blur-sm z-10 pt-20 pb-8 px-6 flex flex-col gap-6">
+              <Link
+                to="/"
+                className="text-[#EAEAEA] font-ibm text-lg border-b border-white/10 pb-4"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <button className="text-[#EAEAEA] font-ibm text-lg border-b border-white/10 pb-4 text-left">
+                About us
+              </button>
+              <button className="text-[#EAEAEA] font-ibm text-lg border-b border-white/10 pb-4 text-left">
+                Services
+              </button>
+              <Link
+                to="/contact"
+                className="text-[#EAEAEA] font-ibm text-lg border-b border-white/10 pb-4"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contact
+              </Link>
+              <button className="bg-[#EAEAEA] text-black font-unispace font-bold text-sm px-6 py-4 rounded-[10px] w-fit mt-2">
+                Start Project
+              </button>
+            </div>
+          )}
+        </nav>
+
+        {/* Hero content */}
+        <div className="relative z-10 flex-1 flex flex-col justify-center px-6 md:px-10 lg:px-[70px] pt-8 pb-16 md:pb-24">
+          <div className="flex flex-col gap-6 max-w-[1300px]">
+            <p className="text-white/90 font-ibm font-light text-base md:text-xl leading-snug">
+              We Make Your Industrial Visually Powerful
+            </p>
+            <h1 className="text-[#EAEAEA] font-unispace font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[36px] leading-[1.44] tracking-[-0.02em] uppercase max-w-[1300px]">
+              Elevating manufacturing businesses from screen to factory floor.
+              Your all-in-one partner for Identity Design, Custom Web Platforms,
+              High-Converting Ads, and Professional On-Site Video Production.
+            </h1>
+            <div className="mt-2">
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center bg-[#EAEAEA] text-[#0F1A31] font-unispace font-bold text-sm leading-[17px] px-[19px] py-[17px] rounded-[10px] hover:bg-white transition-colors"
+              >
+                Contact Us
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── WHO ARE ARTIFEX ── */}
+      <section className="w-full bg-white py-16 md:py-20 lg:py-24">
+        <div className="max-w-[1102px] mx-auto px-6 md:px-10 lg:px-0 flex flex-col gap-12 md:gap-[60px]">
+          <h2 className="font-unispace font-bold text-[#191919] text-2xl md:text-3xl lg:text-[36px] leading-[109%] tracking-[-0.05em]">
+            Who Are Artifex
+          </h2>
+          <div className="flex flex-col gap-10 md:gap-[50px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+              <p className="text-[#191919] font-ibm text-base md:text-lg lg:text-[20px] leading-[135%] tracking-[-0.02em]">
+                Artifex was founded on the principle that industrial branding
+                should be as efficient and streamlined as a production line. With
+                over 5 years of specialized experience, we don't just
+                "design"—we engineer visual solutions that work. We understand
+                that in the industrial sector, clarity is king and downtime
+                isn't an option. Our workflow is designed to pack high-level
+                creativity into a lean, professional package.
+              </p>
+              <p className="text-[#191919] font-ibm text-base md:text-lg lg:text-[20px] leading-[135%] tracking-[-0.02em]">
+                Having spent more than half a decade serving the manufacturing
+                and engineering sectors, we've mastered the art of technical
+                storytelling. From complex 3D renderings to high-performance
+                B2B websites, our track record is built on precision and
+                reliability. We bridge the gap between the factory floor and
+                the boardroom, ensuring your brand speaks the language of global
+                industry leaders and technical experts alike.
+              </p>
+            </div>
+            <div>
+              <button className="inline-flex items-center justify-center bg-[#191919] text-white font-unispace font-bold text-sm leading-[120%] tracking-[-0.02em] px-6 py-[18px] rounded-[10px] hover:bg-black transition-colors">
+                Start Project
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── IMAGE BREAKER ── */}
+      <section className="w-full">
+        <img
+          src={BREAKER_IMAGE}
+          alt="Industrial facility"
+          className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[703px] object-cover"
+        />
+      </section>
+
+      {/* ── WHAT WE DO ── */}
+      <section className="w-full bg-white py-16 md:py-20 lg:py-24">
+        <div className="max-w-[1102px] mx-auto px-6 md:px-10 lg:px-0">
+          <h2 className="font-unispace font-bold text-[#191919] text-2xl md:text-3xl lg:text-[36px] leading-[109%] tracking-[-0.05em] mb-8 md:mb-10">
+            What We Do
+          </h2>
+          <div className="flex flex-col gap-0">
+            {services.map((service) => (
+              <div
+                key={service}
+                className="border-b border-[#191919]/10 py-2 group"
+              >
+                <span className="font-unispace font-bold text-[#191919] text-2xl sm:text-3xl md:text-4xl lg:text-[48px] leading-[149%] tracking-[-0.06em] capitalize group-hover:text-[#0F1A31] transition-colors">
+                  {service}
+                </span>
+              </div>
+            ))}
+            <div className="py-2">
+              <span className="font-unispace font-bold text-black/20 text-2xl sm:text-3xl md:text-4xl lg:text-[40px] leading-[95%] tracking-[-0.06em] capitalize">
+                +More
+              </span>
+            </div>
+          </div>
+          <div className="mt-10">
+            <button className="inline-flex items-center justify-center bg-[#191919] text-white font-unispace font-bold text-sm leading-[120%] tracking-[-0.02em] px-6 py-[18px] rounded-[10px] hover:bg-black transition-colors">
+              Our Service
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ── OUR CLIENTS ── */}
+      <section
+        className="w-full relative py-16 md:py-20 lg:py-[116px] px-6 md:px-10 lg:px-[271px]"
+        style={{
+          background: `linear-gradient(180deg, rgba(0,0,0,0.54) 3.94%, rgba(102,102,102,0.00) 53.12%), linear-gradient(0deg, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.24) 100%), url('${CLIENTS_BG}') lightgray 50% / cover no-repeat`,
+        }}
+      >
+        <div className="max-w-[942px] mx-auto flex flex-col items-center gap-12 md:gap-[56px]">
+          {/* Heading */}
+          <h2 className="font-unispace font-bold text-[#EAEAEA] text-2xl sm:text-3xl md:text-4xl lg:text-[48px] leading-[95%] tracking-[-0.06em] capitalize text-center">
+            Trusted by Industry Leaders
+          </h2>
+
+          {/* Testimonial card */}
+          <div className="w-full max-w-[738px] bg-[#EAEAEA] rounded-[10px] px-6 sm:px-10 lg:px-[50px] py-8 lg:py-[30px] flex flex-col gap-10 lg:gap-[80px]">
+            <div className="flex flex-col items-center gap-6 lg:gap-8">
+              <p className="text-black font-ibm font-medium text-lg sm:text-xl md:text-2xl lg:text-[32px] leading-[109%] tracking-[-0.05em] text-center">
+                {testimonials[activeSlide].quote}
+              </p>
+              <p className="text-black font-ibm font-medium text-lg sm:text-xl md:text-2xl lg:text-[32px] leading-[109%] tracking-[-0.05em] text-center">
+                {testimonials[activeSlide].author}
+              </p>
+            </div>
+
+            {/* Nav bar */}
+            <div className="flex items-center justify-center gap-5">
+              <button onClick={prevSlide} aria-label="Previous testimonial" className="hover:opacity-70 transition-opacity">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M11.8342 21.5L2.33423 12L11.8342 2.5M2.33423 12H21.0548" stroke="black" strokeWidth="2" />
+                </svg>
+              </button>
+              <div className="flex items-center gap-[10px]">
+                {testimonials.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveSlide(i)}
+                    aria-label={`Slide ${i + 1}`}
+                    className="rounded-full transition-all"
+                    style={{
+                      width: 10,
+                      height: 10,
+                      background: i === activeSlide ? "#31110F" : "rgba(0,0,0,0.25)",
+                    }}
+                  />
+                ))}
+              </div>
+              <button onClick={nextSlide} aria-label="Next testimonial" className="hover:opacity-70 transition-opacity">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M11.6659 21.5L21.1659 12L11.6659 2.5M21.1659 12H2.44531" stroke="black" strokeWidth="2" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Outro text */}
+          <p className="text-[#EAEAEA] font-ibm text-base md:text-lg leading-[135%] tracking-[-0.02em] text-center max-w-[480px]">
+            Let us help you elevate your industrial brand with confidence and
+            precision. Reach out to the Artifex team today.
+          </p>
+
+          <button className="inline-flex items-center justify-center bg-[#191919] text-white font-unispace font-bold text-sm leading-[120%] tracking-[-0.02em] px-6 py-[18px] rounded-[10px] hover:bg-black/80 transition-colors">
+            Start Project
+          </button>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer className="w-full bg-white px-6 md:px-10 lg:px-[152px] py-12 md:py-16 lg:py-[68px] flex flex-col gap-10 md:gap-[84px] overflow-hidden">
+        {/* Logo */}
+        <img src={LOGO_DARK} alt="Artifex" className="w-[277px] h-[68px]" />
+
+        {/* Tagline */}
+        <p className="font-geist text-black text-base md:text-[18px] leading-[135%] tracking-[-0.02em]">
+          Technical expertise, decisive industrial impact.
+        </p>
+
+        {/* Contact columns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-[45px]">
+          <div className="flex flex-col gap-1">
+            <p className="font-geist text-black text-sm leading-[140%]">
+              Artifexdesign2569@gmail.com
+            </p>
+            <p className="font-geist text-black text-sm leading-[140%]">
+              080-765-7032
+            </p>
+          </div>
+          <div className="flex flex-col gap-1">
+            <p className="font-geist text-black text-sm leading-[140%]">
+              Bangkok / Samutsakorn / Chonburi
+              <br />
+              Thailand
+            </p>
+          </div>
+          <div className="flex flex-col gap-1">
+            <p className="font-geist text-black text-sm leading-[140%] hover:opacity-70 cursor-pointer transition-opacity">
+              Instagram
+            </p>
+            <p className="font-geist text-black text-sm leading-[140%] hover:opacity-70 cursor-pointer transition-opacity">
+              Facebook
+            </p>
+            <p className="font-geist text-black text-sm leading-[140%] hover:opacity-70 cursor-pointer transition-opacity">
+              LinkedIn
+            </p>
+            <p className="font-geist text-black text-sm leading-[140%] hover:opacity-70 cursor-pointer transition-opacity">
+              Line
+            </p>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <p className="font-geist text-black text-sm leading-[140%]">
+          Artifex © 2025 All Rights Reserved
+        </p>
+      </footer>
+    </div>
+  );
+}
